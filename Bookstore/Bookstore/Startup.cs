@@ -16,6 +16,7 @@ namespace Bookstore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,14 +27,29 @@ namespace Bookstore
                 app.UseDeveloperExceptionPage();
             }
 
+            /*app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Hello from my first middleware.");
+                await next(); //salta al 2o middleware
+                await context.Response.WriteAsync("Returning to the first middleware.");
+
+            });
+
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Hello from my second middleware.");
+                await next();
+            });*/
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
+                endpoints.MapDefaultControllerRoute(); //busca el metodo Index de HomeController
+                /*endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
-                });
+                });*/
             });
         }
     }
